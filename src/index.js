@@ -1,12 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import axios from 'axios';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const input = document.querySelector('#upload');
+
+async function handleUpload(e) {
+    const target = e.target;
+    const file = target.files[0];
+
+    const fd = new FormData();
+    fd.append('file', file);
+
+    const result = await axios.post('/api/v1/upload', fd);
+    debugger
+    console.log(result)
+}
+
+input.onchange = handleUpload;
