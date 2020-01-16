@@ -12,7 +12,6 @@ const App = () => {
     function createUnityInstance(jsonUrl) {
         gameInstance.current = window.UnityLoader.instantiate("gameContainer", "Build/Build.json", {onProgress: window.UnityProgress});
         console.log(gameInstance.current);
-        debugger
     }
 
     useEffect(() => {
@@ -35,6 +34,9 @@ const App = () => {
         try {
             const result = await axios.post('/api/v1/upload', fd);
             console.log(result);
+            if (!result) return
+            console.log(result.data[file.name].id)
+            gameInstance.current.SendMessage('GameManager', 'WebInfoProcessor', result.data[file.name].url)
         } catch(e) {
             message.error('未知错误');
         }
